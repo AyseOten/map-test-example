@@ -13,6 +13,18 @@ interface Props {
 
 }
 
+/**
+ * Component for showing details of the map.
+ *
+ * @component
+ * @example
+ * return (
+ *   <MapContext.Provider value={olMap}>
+ *       {props.children}
+ *   </MapContext.Provider>
+ * )
+ */
+
 const Map = (props: PropsWithChildren<Props>) => {
 
     const [olMap, setOlMap] = useState<OlMap | null>()
@@ -29,6 +41,7 @@ const Map = (props: PropsWithChildren<Props>) => {
                     source: new OSM()
                 })
             ],
+            controls:[],
             target: mapRef.current
         })
 
