@@ -1,15 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import MapContainer from './components/map-container/MapContainer';
 import { SupersetClient } from '@superset-ui/core';
 import { LabelLayout, UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 import Echarts from './Echarts';
 import Charts from './Charts';
+import Sidebar from './Sidebar';
 
 function App() {
-  const option:any = {
+  const option: any = {
     title: {
       text: 'Stacked Area Chart'
     },
@@ -113,8 +114,13 @@ function App() {
         src="http://192.168.20.233:8088/login?username=admin&redirect=/superset/dashboard/world_health?standalone=true"
       >
       </iframe> */}
-      <Echarts/>
-      <Charts option={option} theme={'light'}/>
+      {/* <Echarts/> */}
+      <div className="sidebar">
+        <Sidebar />
+      </div>
+      <div className="chart">
+        <Charts option={option} theme={'light'} />
+      </div>
     </div >
   );
 }

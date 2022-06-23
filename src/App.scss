@@ -1,0 +1,17 @@
+.App {
+  display: flex;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 50px;
+  .chart{
+    width: 70vw;
+  }
+  .sidebar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30vw;
+    height: calc(100vh-50px) !important;
+  }
+}
