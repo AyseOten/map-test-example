@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './Sidebar.scss'
-import { setChartList } from './state/features/chartSlice';
+import { setChartList, setSelectedChart } from './state/features/chartSlice';
 import { useAppSelector } from './state/hooks';
 
 const Sidebar = () => {
@@ -17,7 +17,7 @@ const Sidebar = () => {
     const charts = useAppSelector((state:any)=> state.chart.chartList)
     console.log(charts)
     const [selectedCategory, setSelectedCategory] = useState<any>(charts[0]);
-    // const [charts, setCharts] = useState<any>(undefined)
+    const [newcharts, setNewCharts] = useState<any>(undefined)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -30,19 +30,25 @@ const Sidebar = () => {
         if(charts.length>0){
             console.log(charts)
             console.log(selectedCategory)
+
+            let newCharts = [...charts]
+            
             if(selectedCategory){
-                const exSelectedIndex = charts.findIndex((chart:any)=> chart.key === selectedCategory.key)
-                charts[exSelectedIndex] = {...charts[exSelectedIndex], selected:false}
+                const exSelectedIndex = newCharts.findIndex((chart:any)=> chart.key === selectedCategory.key)
+                newCharts[exSelectedIndex] = {...newCharts[exSelectedIndex], selected:false}
                 console.log(selectedCategory)
             }
-            // else {
-            //     charts[0] = {...charts[0], selected:false}
-            // }
-            const finded = charts.find((category:any)=>key === category.key)
-            const findedIndex = charts.findIndex((chart:any)=> chart.key === key)
-            charts[findedIndex] = {...charts[findedIndex], selected:true}
+            else {
+                newCharts[0] = {...newCharts[0], selected:false}
+            }
+            const finded = newCharts.find((category:any)=>key === category.key)
+            dispatch(setSelectedChart(finded))
+            const findedIndex = newCharts.findIndex((chart:any)=> chart.key === key)
+            newCharts[findedIndex] = {...newCharts[findedIndex], selected:true}
             setSelectedCategory(finded)
             console.log(finded)
+
+            setNewCharts(newCharts)
         }
     }
 
