@@ -43,6 +43,7 @@ export default function Charts({
 
   useEffect(() => {
     // Update chart
+
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
       chart?.setOption(option, settings);

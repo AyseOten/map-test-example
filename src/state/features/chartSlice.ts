@@ -13,7 +13,7 @@ export const chartSlice = createSlice({
             state.chartList = action.payload;
         },
         setSelectedChart: (state: any, action) => {
-            state.chartList = action.payload;
+            state.selectedChart = action.payload;
         },
     },
 })

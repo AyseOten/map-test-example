@@ -6,18 +6,19 @@ import { setChartList, setSelectedChart } from './state/features/chartSlice';
 import { useAppSelector } from './state/hooks';
 
 const Sidebar = () => {
-    const categories = [{ name: 'Bar Chart', key: '0', image: "barchart.jpeg",selected:true },
-    { name: 'Bubble Chart', key: '1', image: "bubble.jpg",selected:false },
+    const categories = [
+    { name: 'Line Chart', key: '0', image: "linechart.jpeg",selected:true },
+    { name: 'Bar Chart', key: '1', image: "barchart.jpeg",selected:false },
     { name: 'Column Chart', key: '2', image: "columnchart.jpg",selected:false },
-    { name: 'Line Chart', key: '3', image: "linechart.jpeg",selected:false },
-    { name: 'Pie Chart', key: '4', image: "pie.jpeg",selected:false },    
+    { name: 'Pie Chart', key: '3', image: "pie.jpeg",selected:false },    
+    { name: 'Bubble Chart', key: '4', image: "bubble.jpg",selected:false },
     { name: 'Histogram Chart', key: '5', image: "Histogram.jpg",selected:false }    
 
     ];
     const charts = useAppSelector((state:any)=> state.chart.chartList)
     console.log(charts)
     const [selectedCategory, setSelectedCategory] = useState<any>(charts[0]);
-    const [newcharts, setNewCharts] = useState<any>(undefined)
+    //const [newcharts, setNewCharts] = useState<any>(undefined)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -27,16 +28,17 @@ const Sidebar = () => {
 
     
     const onChangeSelected = (key:string) => {
+        // debugger
         if(charts.length>0){
-            console.log(charts)
-            console.log(selectedCategory)
+            //console.log(charts)
+            //console.log(selectedCategory)
 
             let newCharts = [...charts]
             
             if(selectedCategory){
                 const exSelectedIndex = newCharts.findIndex((chart:any)=> chart.key === selectedCategory.key)
                 newCharts[exSelectedIndex] = {...newCharts[exSelectedIndex], selected:false}
-                console.log(selectedCategory)
+                //console.log(selectedCategory)
             }
             else {
                 newCharts[0] = {...newCharts[0], selected:false}
@@ -46,9 +48,10 @@ const Sidebar = () => {
             const findedIndex = newCharts.findIndex((chart:any)=> chart.key === key)
             newCharts[findedIndex] = {...newCharts[findedIndex], selected:true}
             setSelectedCategory(finded)
-            console.log(finded)
+            //console.log(finded)
 
-            setNewCharts(newCharts)
+            //setNewCharts(newCharts)
+            dispatch(setChartList(newCharts))
         }
     }
 

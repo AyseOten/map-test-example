@@ -12,23 +12,28 @@ import { useAppSelector } from './state/hooks';
 
 function App() {
   const selectedChart = useAppSelector((state) => state.chart.selectedChart)
+  // console.log(selectedChart)
 
   useEffect(() => {
     switch (selectedChart.key) {
       case '0':
-        setOption(optionBar);
+        setOption(undefined)
+        setOption(optionLine);
         break;
       case '1':
-        // setOption(optionBubble);
+        setOption(undefined)
+        // setOption(optionBar);
         break;
       case '2':
+        setOption(undefined)
         setOption(optionColumn);
         break;
       case '3':
-        setOption(optionLine);
+        setOption(undefined)
+        // setOption(optionPie);
         break;
       case '4':
-        setOption(optionPie);
+        //setOption(optionPie);
         break;
       case '4':
         // setOption(optionHistogram);
@@ -37,6 +42,7 @@ function App() {
       // code block
     }
   }, [selectedChart])
+
 
   const optionColumn = {
     tooltip: {
@@ -252,62 +258,123 @@ function App() {
   };
 
   const optionBar = {
-    xAxis: {
-      type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-      type: 'value'
-    },
-    series: [
-      {
-        data: [120, 200, 150, 80, 70, 110, 130],
-        type: 'bar',
-        showBackground: true,
-        backgroundStyle: {
-          color: 'rgba(180, 180, 180, 0.2)'
+      angleAxis: {},
+      radiusAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu'],
+        z: 10
+      },
+      polar: {},
+      series: [
+        {
+          type: 'bar',
+          data: [1, 2, 3, 4],
+          coordinateSystem: 'polar',
+          name: 'A',
+          stack: 'a',
+          emphasis: {
+            focus: 'series'
+          }
+        },
+        {
+          type: 'bar',
+          data: [2, 4, 6, 8],
+          coordinateSystem: 'polar',
+          name: 'B',
+          stack: 'a',
+          emphasis: {
+            focus: 'series'
+          }
+        },
+        {
+          type: 'bar',
+          data: [1, 2, 3, 4],
+          coordinateSystem: 'polar',
+          name: 'C',
+          stack: 'a',
+          emphasis: {
+            focus: 'series'
+          }
         }
+      ],
+      legend: {
+        show: true,
+        data: ['A', 'B', 'C']
       }
-    ]
-  };
+    };
+    
+    
 
   const optionPie = {
-    legend: {
-      top: 'bottom'
-    },
-    toolbox: {
-      show: true,
-      feature: {
-        mark: { show: true },
-        dataView: { show: true, readOnly: false },
-        restore: { show: true },
-        saveAsImage: { show: true }
-      }
-    },
-    series: [
-      {
-        name: 'Nightingale Chart',
-        type: 'pie',
-        radius: [50, 250],
-        center: ['50%', '50%'],
-        roseType: 'area',
-        itemStyle: {
-          borderRadius: 8
+    backgroundColor: '#2c343c',
+  title: {
+    text: 'Customized Pie',
+    left: 'center',
+    top: 20,
+    textStyle: {
+      color: '#ccc'
+    }
+  },
+  tooltip: {
+    trigger: 'item'
+  },
+  visualMap: {
+    show: false,
+    min: 80,
+    max: 600,
+    inRange: {
+      colorLightness: [0, 1]
+    }
+  },
+  series: [
+    {
+      name: 'Access From',
+      type: 'pie',
+      radius: '55%',
+      center: ['50%', '50%'],
+      data: [
+        { value: 335, name: 'Direct' },
+        { value: 310, name: 'Email' },
+        { value: 274, name: 'Union Ads' },
+        { value: 235, name: 'Video Ads' },
+        { value: 400, name: 'Search Engine' }
+      ].sort(function (a, b) {
+        return a.value - b.value;
+      }),
+      roseType: 'radius',
+      label: {
+        color: 'rgba(255, 255, 255, 0.3)'
+      },
+      labelLine: {
+        lineStyle: {
+          color: 'rgba(255, 255, 255, 0.3)'
         },
-        data: [
-          { value: 120, name: 'rose 1' },
-          { value: 200, name: 'rose 2' },
-          { value: 150, name: 'rose 3' },
-          { value: 80, name: 'rose 4' },
-          { value: 70, name: 'rose 5' },
-          { value: 110, name: 'rose 6' },
-          { value: 130, name: 'rose 7' },
-        ]
+        smooth: 0.2,
+        length: 10,
+        length2: 20
+      },
+      itemStyle: {
+        color: '#c23531',
+        shadowBlur: 200,
+        shadowColor: 'rgba(0, 0, 0, 0.5)'
+      },
+      animationType: 'scale',
+      animationEasing: 'elasticOut',
+      animationDelay: function (idx:any) {
+        return Math.random() * 200;
       }
-    ]
+    }
+  ]
   };
 
   const [option, setOption] = useState(optionLine)
+  //console.log(option,"option")
+
+
+  useEffect(() => {
+    console.log(option)
+  }, [option])
+  
 
   return (
 
@@ -322,7 +389,8 @@ function App() {
         <Sidebar />
       </div>
       <div className="chart">
-        <Charts option={option} theme={'light'} />
+        {console.log(option)}
+        {option && <Charts option={option} theme={'dark'} />}
       </div>
     </div >
   );

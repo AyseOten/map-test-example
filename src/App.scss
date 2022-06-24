@@ -5,13 +5,13 @@
   height: 100vh;
   padding-top: 50px;
   .chart{
-    width: 70vw;
+    width: 75vw;
   }
   .sidebar{
     display: flex;
-    align-items: center;
+    //align-items: center;
     justify-content: center;
-    width: 30vw;
+    width: 25vw;
     height: calc(100vh-50px) !important;
   }
 }
